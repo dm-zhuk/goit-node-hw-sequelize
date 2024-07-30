@@ -1,0 +1,25 @@
+{
+  "name": "goit-node-hw-sequelize",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dm-zhuk/goit-node-hw-sequelize.git"
+  },
+  "keywords": [],
+  "author": "Dmytro Zhuk <dm.zhuk@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.12.0",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
