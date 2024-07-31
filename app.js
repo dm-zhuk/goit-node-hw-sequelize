@@ -1,50 +1,18 @@
-import { Sequelize, DataTypes } from "sequelize";
+import express from "express";
+import sequelizeRouter from "./routes/sequelizeRouter.js";
 
-// Option 1: Passing a connection URI
-// const sequelize = new Sequelize('sqlite::memory:')
-const sequelize = new Sequelize("postgres://user:pass@example.com:5432/dbname"); // Example for postgres
+const app = express();
+app.use(express.json());
+app.use("/api/sequelize", sequelizeRouter);
+app.use((_, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
+app.use((err, req, res, next) => {
+  const { status = 500, message = "Server error" } = err;
+  res.status(status).json({ message });
+});
+app.listen(3000, () => {
+  console.log("Server is running. Use our API on port: 3000");
+});
 
-// Option 2: Passing parameters separately (sqlite)
-/* const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: 'path/to/database.sqlite'
-}); */
-
-// Option 3: Passing parameters separately (other dialects)
-/* const sequelize = new Sequelize('database', 'username', 'password', {
-  host: 'localhost',
-  dialect: 'postgres'  // * one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle'
-}); */
-
-const User = sequelize.define(
-  "User",
-  {
-    // Тут визначаються атрибути моделі
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      // allowNull за замовчуванням має значення true
-    },
-  },
-  {
-    // Тут визначаються інші налаштування моделі
-  }
-);
-
-// `sequelize.define` повертає модель
-console.log(User === sequelize.models.User); // true
-
-sequelize.define(
-  "User",
-  {
-    // ...
-  },
-  {
-    freezeTableName: true,
-  }
-);
-
-sequelize.close();
+// sequelize.close();
